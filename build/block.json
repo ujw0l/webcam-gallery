@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "create-block/webcam-gallery",
+  "version": "0.1.0",
+  "title": "Webcam Gallery",
+  "category": "media",
+  "icon": "camera-alt",
+  "description": "Block to take pictures with WebCam and create Galleries.",
+  "supports": {
+    "color": {
+      "text": true,
+      "background": true,
+      "link": true
+    }
+  },
+  "textdomain": "webcam-gallery",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}
