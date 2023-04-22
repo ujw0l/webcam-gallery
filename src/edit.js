@@ -1,8 +1,9 @@
 import {useEffect, useRef,useState} from 'react';
-import { CheckboxControl, PanelBody, Button, RangeControl, Spinner,Modal,RadioControl } from '@wordpress/components';
+import { CheckboxControl, PanelBody, Button, RangeControl,SelectControl, Spinner,Modal,RadioControl } from '@wordpress/components';
 import {jsMasonry} from 'js-masonry/js-masonry.js'
 import {imageCarousel} from 'images-carousel/image-carousel.js'
 import {ctclImgGal} from 'ctcl-image-gallery/ctcl-image-gallery.js'
+
 
 
 
@@ -60,12 +61,11 @@ if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll(
 
 
 	}else if(attributes.galType == 'product'){
-
-		console.log(attributes.selectedGalImgs.length)
         new ctclImgGal(`#webcam-main-gallery-${clientId}`,{imgGal:attributes.selectedGalImgs, mainImgWd : attributes.prodMainDivWd , mainImgHt:attributes.prodMainDivHt,});
 
 	}else if(attributes.galType == 'carousel'){
-		galDiv.style.width = `${attributes.carouselWd}px`;
+		let carWid =  attributes.carouselWd > 600 ? 600 : attributes.carouselWd;
+		galDiv.style.width = `${carWid}px`;
 		galDiv.style.height = `${attributes.carouselHt}px`; 
 		galDiv.style.marginLeft = 'auto';
 		galDiv.style.marginRight = 'auto';
@@ -94,7 +94,7 @@ if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll(
 
       const constraints = { video: true };
 
-      navigator.mediaDevices.getUserMedia(constraints)
+      navigator.mediaDevices.getUserMedia({video:{deviceId: { exact: attributes.activeCam }}})
         .then(stream => {
           video.srcObject = stream;
           video.play();
@@ -104,9 +104,32 @@ if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll(
         .catch(error => {
           console.error(error);
         });
-    }, []);
 
-    const takePicture = () => {
+
+
+    }, [attributes.activeCam]);
+
+//get all ebcams list
+	useEffect(()=>{
+
+		navigator.mediaDevices.enumerateDevices()
+  .then(devices => {
+
+	let cam = []; 
+    devices.filter(device => device.kind === 'videoinput').forEach((device,i) => {
+		cam.push({label:device.label, value:device.deviceId})
+	 	setAttributes({activeCam:devices[0].deviceI});
+       setAttributes({availCams:cam});
+	  
+    });
+  })
+  .catch(err => {
+    console.log(err.name + ": " + err.message);
+  });
+
+	},[])
+
+    const takePicture = async () => {
 	
 	  	
       const video = videoRef.current;
@@ -120,12 +143,10 @@ if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll(
 	
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      const imageDataUrl = canvas.toDataURL();
-	  
-
-	  
+      const imageDataUrl = canvas.toDataURL('image/jpeg');
       setAttributes({webCamImages:[...attributes.webCamImages,imageDataUrl]});
-    };
+    }
+
 
     return (
 		<div {...useBlockProps()}  >
@@ -139,8 +160,25 @@ if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll(
 		  <InspectorControls>
 			<PanelBody>
           <div style={{display:'block'}}>
+			<span>
             <Button variant={'primary'} style={{marginLeft:'auto',marginRight:'auto',display:'block'}} onClick={takePicture}>{__("Take Picture",'webcam-gallery')}</Button>
-          </div>
+          </span>
+		  <span>
+
+		  <SelectControl
+
+    label={ __( 'Select Camera:','webcam-gallery' ) }
+    value={ attributes.activeCam } 
+    onChange={ ( camId ) => setAttributes({activeCam : camId})}
+    options={ attributes.availCams }
+    __nextHasNoMarginBottom
+/>
+
+
+		  </span>
+		  
+		  
+		  </div>
 		  </PanelBody>
 		  <PanelBody>
 					<h3> {__('Select effects to apply', 'webcam-gallery')} </h3>

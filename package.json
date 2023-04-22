@@ -20,6 +20,8 @@
 		"webpack-cli": "^5.0.1"
 	},
 	"dependencies": {
+		"@wordpress/media-utils": "^4.22.0",
+		"ctcl-image-gallery": "^1.0.0",
 		"images-carousel": "^1.0.2"
 	}
 }

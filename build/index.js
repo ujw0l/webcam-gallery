@@ -87,14 +87,14 @@ function Edit(_ref) {
           elMargin: attributes.masonryGutter
         });
       } else if (attributes.galType == 'product') {
-        console.log(attributes.selectedGalImgs.length);
         new ctcl_image_gallery_ctcl_image_gallery_js__WEBPACK_IMPORTED_MODULE_5__.ctclImgGal(`#webcam-main-gallery-${clientId}`, {
           imgGal: attributes.selectedGalImgs,
           mainImgWd: attributes.prodMainDivWd,
           mainImgHt: attributes.prodMainDivHt
         });
       } else if (attributes.galType == 'carousel') {
-        galDiv.style.width = `${attributes.carouselWd}px`;
+        let carWid = attributes.carouselWd > 600 ? 600 : attributes.carouselWd;
+        galDiv.style.width = `${carWid}px`;
         galDiv.style.height = `${attributes.carouselHt}px`;
         galDiv.style.marginLeft = 'auto';
         galDiv.style.marginRight = 'auto';
@@ -121,15 +121,42 @@ function Edit(_ref) {
     const constraints = {
       video: true
     };
-    navigator.mediaDevices.getUserMedia(constraints).then(stream => {
+    navigator.mediaDevices.getUserMedia({
+      video: {
+        deviceId: {
+          exact: attributes.activeCam
+        }
+      }
+    }).then(stream => {
       video.srcObject = stream;
       video.play();
       video.addEventListener('play', () => setTimeout(() => window.dispatchEvent(new Event('resize')), 1000));
     }).catch(error => {
       console.error(error);
     });
+  }, [attributes.activeCam]);
+
+  //get all ebcams list
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    navigator.mediaDevices.enumerateDevices().then(devices => {
+      let cam = [];
+      devices.filter(device => device.kind === 'videoinput').forEach((device, i) => {
+        cam.push({
+          label: device.label,
+          value: device.deviceId
+        });
+        setAttributes({
+          activeCam: devices[0].deviceI
+        });
+        setAttributes({
+          availCams: cam
+        });
+      });
+    }).catch(err => {
+      console.log(err.name + ": " + err.message);
+    });
   }, []);
-  const takePicture = () => {
+  const takePicture = async () => {
     const video = videoRef.current;
     video.style.opacity = '0.5';
     setTimeout(() => {
@@ -139,7 +166,7 @@ function Edit(_ref) {
     const context = canvas.getContext('2d');
     context.filter = attributes.filter;
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    const imageDataUrl = canvas.toDataURL();
+    const imageDataUrl = canvas.toDataURL('image/jpeg');
     setAttributes({
       webCamImages: [...attributes.webCamImages, imageDataUrl]
     });
@@ -182,7 +209,7 @@ function Edit(_ref) {
     style: {
       display: 'block'
     }
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     variant: 'primary',
     style: {
       marginLeft: 'auto',
@@ -190,7 +217,15 @@ function Edit(_ref) {
       display: 'block'
     },
     onClick: takePicture
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)("Take Picture", 'webcam-gallery')))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, " ", (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Select effects to apply', 'webcam-gallery'), " "), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)("Take Picture", 'webcam-gallery'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Select Camera:', 'webcam-gallery'),
+    value: attributes.activeCam,
+    onChange: camId => setAttributes({
+      activeCam: camId
+    }),
+    options: attributes.availCams,
+    __nextHasNoMarginBottom: true
+  })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, " ", (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Select effects to apply', 'webcam-gallery'), " "), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Blur (px)', 'webcam-gallery'),
     min: 0,
     max: 100,
@@ -631,13 +666,21 @@ __webpack_require__.r(__webpack_exports__);
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_5__.name, {
   keywords: [(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Webcam', 'webcam-gallery'), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('image gallery', 'webcam-gallery')],
   attributes: {
+    activeCam: {
+      type: 'String',
+      default: ''
+    },
+    availCams: {
+      type: "Array",
+      default: []
+    },
     carouselWd: {
       type: "Number",
       default: 600
     },
     carouselHt: {
       type: "Number",
-      default: 500
+      default: 235
     },
     masonryGutter: {
       type: "Number",
@@ -653,7 +696,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     prodMainDivHt: {
       type: 'Number',
-      default: 500
+      default: 375
     },
     galType: {
       type: 'String',
@@ -820,8 +863,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ctclImgGal": function() { return /* binding */ ctclImgGal; }
 /* harmony export */ });
-
-
 class ctclImgGal{
 
 

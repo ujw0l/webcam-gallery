@@ -33,13 +33,14 @@ registerBlockType( metadata.name, {
 	keywords: [__('Webcam', 'webcam-gallery'), __('image gallery', 'webcam-gallery')],
 
 	attributes:{
-
+		activeCam : {type:'String',default:''},
+		availCams:{type:"Array", default:[]},
 		carouselWd :{type:"Number", default:600},
-		carouselHt : {type:"Number",default:500},
+		carouselHt : {type:"Number",default:235},
 		masonryGutter :{type:"Number",default:20},
 		masImgWd : {type:'Number', default : 140}, 
 		prodMainDivWd:{type:'Number', default:500},
-		prodMainDivHt : {type:'Number',default:500},
+		prodMainDivHt : {type:'Number',default:375},
 		galType:{type:'String', default:'masonry'},
 		webCamImages :{type:'Array', default:[]},
 		selectedGalImgs:{type:'Array',default:[]},
