@@ -44,6 +44,27 @@ export default function Edit({clientId,attributes,setAttributes}) {
 	const [modIsOpen, setModOpen] = useState(false);
 
 
+	//get all ebcams list
+	useEffect(()=>{
+
+		navigator.mediaDevices.enumerateDevices()
+  .then(devices => {
+
+	let cam = []; 
+    devices.filter(device => device.kind === 'videoinput').forEach((device,i) => {
+		cam.push({label:device.label, value:device.deviceId})
+	 	setAttributes({activeCam:devices[0].deviceI});
+       setAttributes({availCams:cam});
+	  
+    });
+  })
+  .catch(err => {
+    console.log(err.name + ": " + err.message);
+  });
+
+	},[])
+
+
 //apply gallery layout
 useEffect(()=>{
 let galDiv = document.querySelector(`#webcam-main-gallery-${clientId}`);
@@ -79,7 +100,7 @@ if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll(
 
 }
   
-},[attributes.galType,attributes.selectedGalImgs, attributes.prodMainDivHt,attributes.prodMainDivWd,attributes.masImgWd,attributes.carouselWd,attributes.carouselHt,attributes.masonryGutter])
+},[attributes.galType,attributes.selectedGalImgs, attributes.prodMainDivHt,attributes.prodMainDivWd,attributes.masImgWd,attributes.carouselWd,attributes.carouselHt,attributes.masonryGutter,attributes.activeCam])
 
 
 	// for applying effects
@@ -110,25 +131,7 @@ if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll(
 
     }, [attributes.activeCam]);
 
-//get all ebcams list
-	useEffect(()=>{
 
-		navigator.mediaDevices.enumerateDevices()
-  .then(devices => {
-
-	let cam = []; 
-    devices.filter(device => device.kind === 'videoinput').forEach((device,i) => {
-		cam.push({label:device.label, value:device.deviceId})
-	 	setAttributes({activeCam:devices[0].deviceI});
-       setAttributes({availCams:cam});
-	  
-    });
-  })
-  .catch(err => {
-    console.log(err.name + ": " + err.message);
-  });
-
-	},[])
 
     const takePicture = async () => {
 	

@@ -74,6 +74,27 @@ function Edit(_ref) {
   const canvasRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
   const [modIsOpen, setModOpen] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
 
+  //get all ebcams list
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    navigator.mediaDevices.enumerateDevices().then(devices => {
+      let cam = [];
+      devices.filter(device => device.kind === 'videoinput').forEach((device, i) => {
+        cam.push({
+          label: device.label,
+          value: device.deviceId
+        });
+        setAttributes({
+          activeCam: devices[0].deviceI
+        });
+        setAttributes({
+          availCams: cam
+        });
+      });
+    }).catch(err => {
+      console.log(err.name + ": " + err.message);
+    });
+  }, []);
+
   //apply gallery layout
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     let galDiv = document.querySelector(`#webcam-main-gallery-${clientId}`);
@@ -108,7 +129,7 @@ function Edit(_ref) {
         return;
       }
     }
-  }, [attributes.galType, attributes.selectedGalImgs, attributes.prodMainDivHt, attributes.prodMainDivWd, attributes.masImgWd, attributes.carouselWd, attributes.carouselHt, attributes.masonryGutter]);
+  }, [attributes.galType, attributes.selectedGalImgs, attributes.prodMainDivHt, attributes.prodMainDivWd, attributes.masImgWd, attributes.carouselWd, attributes.carouselHt, attributes.masonryGutter, attributes.activeCam]);
 
   // for applying effects
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
@@ -138,27 +159,6 @@ function Edit(_ref) {
       console.error(error);
     });
   }, [attributes.activeCam]);
-
-  //get all ebcams list
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    navigator.mediaDevices.enumerateDevices().then(devices => {
-      let cam = [];
-      devices.filter(device => device.kind === 'videoinput').forEach((device, i) => {
-        cam.push({
-          label: device.label,
-          value: device.deviceId
-        });
-        setAttributes({
-          activeCam: devices[0].deviceI
-        });
-        setAttributes({
-          availCams: cam
-        });
-      });
-    }).catch(err => {
-      console.log(err.name + ": " + err.message);
-    });
-  }, []);
   const takePicture = async () => {
     const video = videoRef.current;
     video.style.opacity = '0.5';
