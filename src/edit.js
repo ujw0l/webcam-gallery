@@ -160,11 +160,14 @@ if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll(
 		  <InspectorControls>
 			<PanelBody>
           <div style={{display:'block'}}>
-			<span>
+			<span style={{marginBottom:"10px"}}>
+				<PanelBody header={__('Capture Picture', 'webcam-gallery')}>
             <Button variant={'primary'} style={{marginLeft:'auto',marginRight:'auto',display:'block'}} onClick={takePicture}>{__("Take Picture",'webcam-gallery')}</Button>
-          </span>
-		  <span>
+			</PanelBody>
+		  </span>
 
+		  <span>
+<PanelBody>
 		  <SelectControl
 
     label={ __( 'Select Camera:','webcam-gallery' ) }
@@ -174,7 +177,7 @@ if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll(
     __nextHasNoMarginBottom
 />
 
-
+</PanelBody>
 		  </span>
 		  
 		  
