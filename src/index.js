@@ -33,6 +33,7 @@ registerBlockType( metadata.name, {
 	keywords: [__('Webcam', 'webcam-gallery'), __('image gallery', 'webcam-gallery')],
 
 	attributes:{
+		clntId : {type:"String", default:""},
 		activeCam : {type:'String',default:''},
 		availCams:{type:"Array", default:[]},
 		carouselWd :{type:"Number", default:600},

@@ -15,10 +15,19 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @return {WPElement} Element to render.
  */
-export default function save() {
+export default function save({clientId, attributes}) {
+
+
 	return (
-		<p { ...useBlockProps.save() }>
-			{ 'Webcam Gallery – hello from the saved content!' }
-		</p>
+		<div { ...useBlockProps.save() }>
+			<div style={{display:"none"}} id={`webcam-main-gallery-${attributes.clntId}`} data-mas-gutwd={attributes.masonryGutter} data-carousel-height={attributes.carouselHt} data-carousel-width={attributes.carouselWd} data-prod-ht={attributes.prodMainDivHt}  data-prod-wd={attributes.prodMainDivWd} className = {`webcam-gal-${attributes.galType} webcam-gallery-cont`} >
+		
+			{
+		     		attributes.selectedGalImgs.map(x=>	<img  style={{width: attributes.masImgWd}} src={x}/>)
+			}
+
+		</div>
+			
+		</div>
 	);
 }

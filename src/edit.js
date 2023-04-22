@@ -47,6 +47,7 @@ export default function Edit({clientId,attributes,setAttributes}) {
 //apply gallery layout
 useEffect(()=>{
 let galDiv = document.querySelector(`#webcam-main-gallery-${clientId}`);
+setAttributes({clntId:clientId})
 
    galDiv.style = '';
 

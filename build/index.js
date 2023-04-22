@@ -77,6 +77,9 @@ function Edit(_ref) {
   //apply gallery layout
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     let galDiv = document.querySelector(`#webcam-main-gallery-${clientId}`);
+    setAttributes({
+      clntId: clientId
+    });
     galDiv.style = '';
     if (attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll('img')).length > 3) {
       Array.from(galDiv.querySelectorAll('img')).map(x => x.style = '');
@@ -672,6 +675,10 @@ __webpack_require__.r(__webpack_exports__);
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_5__.name, {
   keywords: [(0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Webcam', 'webcam-gallery'), (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('image gallery', 'webcam-gallery')],
   attributes: {
+    clntId: {
+      type: "String",
+      default: ""
+    },
     activeCam: {
       type: 'String',
       default: ''
@@ -853,8 +860,28 @@ __webpack_require__.r(__webpack_exports__);
  *
  * @return {WPElement} Element to render.
  */
-function save() {
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save(), 'Webcam Gallery – hello from the saved content!');
+function save(_ref) {
+  let {
+    clientId,
+    attributes
+  } = _ref;
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save(), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    style: {
+      display: "none"
+    },
+    id: `webcam-main-gallery-${attributes.clntId}`,
+    "data-mas-gutwd": attributes.masonryGutter,
+    "data-carousel-height": attributes.carouselHt,
+    "data-carousel-width": attributes.carouselWd,
+    "data-prod-ht": attributes.prodMainDivHt,
+    "data-prod-wd": attributes.prodMainDivWd,
+    className: `webcam-gal-${attributes.galType} webcam-gallery-cont`
+  }, attributes.selectedGalImgs.map(x => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+    style: {
+      width: attributes.masImgWd
+    },
+    src: x
+  }))));
 }
 
 /***/ }),
@@ -1473,7 +1500,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ (function(module) {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"create-block/webcam-gallery","version":"0.1.0","title":"Webcam Gallery","category":"media","icon":"camera-alt","description":"Block to take pictures with WebCam and create Galleries.","supports":{"color":{"text":true,"background":true,"link":true}},"textdomain":"webcam-gallery","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"create-block/webcam-gallery","version":"0.1.0","title":"Webcam Gallery","category":"media","icon":"camera-alt","description":"Block to take pictures with WebCam and create Galleries.","supports":{"color":{"text":true,"background":true,"link":true}},"textdomain":"webcam-gallery","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":["file:./frontend_script.js"]}');
 
 /***/ })
 

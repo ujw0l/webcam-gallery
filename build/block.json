@@ -17,5 +17,8 @@
   "textdomain": "webcam-gallery",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
-  "style": "file:./style-index.css"
+  "style": "file:./style-index.css",
+  "viewScript": [
+    "file:./frontend_script.js"
+  ]
 }
