@@ -43,14 +43,14 @@ export default function Edit({clientId,attributes,setAttributes}) {
 	const [modIsOpen, setModOpen] = useState(false);
 
 
-
+//apply gallery layout
 useEffect(()=>{
 let galDiv = document.querySelector(`#webcam-main-gallery-${clientId}`);
 
+   galDiv.style = '';
 
 
-
-if(attributes.selectedGalImgs.length >= 3){
+if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll('img')).length > 3 ){
 
 	Array.from(galDiv.querySelectorAll('img')).map(x=>x.style='');
 	galDiv.querySelectorAll('div') != null && Array.from(galDiv.querySelectorAll('div')).map(y=>y.remove());
@@ -60,6 +60,8 @@ if(attributes.selectedGalImgs.length >= 3){
 
 
 	}else if(attributes.galType == 'product'){
+
+		console.log(attributes.selectedGalImgs.length)
         new ctclImgGal(`#webcam-main-gallery-${clientId}`,{imgGal:attributes.selectedGalImgs, mainImgWd : attributes.prodMainDivWd , mainImgHt:attributes.prodMainDivHt,});
 
 	}else if(attributes.galType == 'carousel'){
@@ -262,13 +264,18 @@ if(attributes.selectedGalImgs.length >= 3){
 						  
 						   onChange={
 							()=> {
-								setAttributes(
-									{selectedGalImgs:Array.from(document.querySelectorAll('span.allGalImage')).map(y=>{
-								       if(y.querySelector('.components-checkbox-control__input').checked === true){
-									   return y.querySelector('img').src
-									 
-								}
-							})})}
+
+
+								let selImg = 	Array.from(document.querySelectorAll('span.allGalImage')).map(y=>{
+									if(y.querySelector('.components-checkbox-control__input').checked === true){
+									return y.querySelector('img').src
+								  
+							 }})
+						
+							
+								setAttributes({selectedGalImgs:selImg.filter(a=> a != undefined )})
+								
+							}
 							
 							} 
 							/>
@@ -335,7 +342,7 @@ if(attributes.selectedGalImgs.length >= 3){
 	<RangeControl
 						label={__('Main Image Width', 'webcam-gallery')}
 						min={200}
-						max={800}
+						max={900}
 						step= {5}
 						withInputField = {true}
 						onChange={val => setAttributes({prodMainDivWd:val}) }
@@ -371,7 +378,7 @@ if(attributes.selectedGalImgs.length >= 3){
 <RangeControl
 						label={__('Gutter Width', 'webcam-gallery')}
 						min={1}
-						max={100}
+						max={50}
 						step={1}
 						withInputField = {true}
 						onChange={val => setAttributes({masonryGutter:val}) }
@@ -414,7 +421,7 @@ if(attributes.selectedGalImgs.length >= 3){
 	<RangeControl
 						label={__('Carousel Width', 'webcam-gallery')}
 						min={100}
-						max={650}
+						max={900}
 						step= {1}
 						withInputField = {true}
 						onChange={val => setAttributes({carouselWd:val}) }
@@ -430,7 +437,7 @@ if(attributes.selectedGalImgs.length >= 3){
 
 		</div>
 
-		<div id={`webcam-main-gallery-${clientId}`} >
+		<div id={`webcam-main-gallery-${clientId}`} className = {'webcam-gallery-cont'} >
 			{
 				attributes.selectedGalImgs.map(x=>	x != undefined && <img style={{width:"33%"}} src={x}/>)
 			}

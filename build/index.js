@@ -73,9 +73,12 @@ function Edit(_ref) {
   const videoRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
   const canvasRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
   const [modIsOpen, setModOpen] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+
+  //apply gallery layout
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     let galDiv = document.querySelector(`#webcam-main-gallery-${clientId}`);
-    if (attributes.selectedGalImgs.length >= 3) {
+    galDiv.style = '';
+    if (attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll('img')).length > 3) {
       Array.from(galDiv.querySelectorAll('img')).map(x => x.style = '');
       galDiv.querySelectorAll('div') != null && Array.from(galDiv.querySelectorAll('div')).map(y => y.remove());
       if (attributes.galType == 'masonry') {
@@ -84,6 +87,7 @@ function Edit(_ref) {
           elMargin: attributes.masonryGutter
         });
       } else if (attributes.galType == 'product') {
+        console.log(attributes.selectedGalImgs.length);
         new ctcl_image_gallery_ctcl_image_gallery_js__WEBPACK_IMPORTED_MODULE_5__.ctclImgGal(`#webcam-main-gallery-${clientId}`, {
           imgGal: attributes.selectedGalImgs,
           mainImgWd: attributes.prodMainDivWd,
@@ -359,12 +363,13 @@ function Edit(_ref) {
       className: "webcam-selected-gal",
       checked: attributes.selectedGalImgs.includes(x),
       onChange: () => {
+        let selImg = Array.from(document.querySelectorAll('span.allGalImage')).map(y => {
+          if (y.querySelector('.components-checkbox-control__input').checked === true) {
+            return y.querySelector('img').src;
+          }
+        });
         setAttributes({
-          selectedGalImgs: Array.from(document.querySelectorAll('span.allGalImage')).map(y => {
-            if (y.querySelector('.components-checkbox-control__input').checked === true) {
-              return y.querySelector('img').src;
-            }
-          })
+          selectedGalImgs: selImg.filter(a => a != undefined)
         });
       }
     })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -455,7 +460,7 @@ function Edit(_ref) {
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Main Image Width', 'webcam-gallery'),
     min: 200,
-    max: 800,
+    max: 900,
     step: 5,
     withInputField: true,
     onChange: val => setAttributes({
@@ -507,7 +512,7 @@ function Edit(_ref) {
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Gutter Width', 'webcam-gallery'),
     min: 1,
-    max: 100,
+    max: 50,
     step: 1,
     withInputField: true,
     onChange: val => setAttributes({
@@ -559,7 +564,7 @@ function Edit(_ref) {
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Carousel Width', 'webcam-gallery'),
     min: 100,
-    max: 650,
+    max: 900,
     step: 1,
     withInputField: true,
     onChange: val => setAttributes({
@@ -567,7 +572,8 @@ function Edit(_ref) {
     }),
     value: attributes.carouselWd
   }))))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    id: `webcam-main-gallery-${clientId}`
+    id: `webcam-main-gallery-${clientId}`,
+    className: 'webcam-gallery-cont'
   }, attributes.selectedGalImgs.map(x => x != undefined && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     style: {
       width: "33%"
@@ -838,7 +844,6 @@ class ctclImgGal{
         el.insertBefore(mainImgDiv,el.querySelector('img'));
 
       
-      
         let carouselDiv =  document.createElement('div');
         carouselDiv.style.width = `${opt.imgGal.length * 76}px`;
         carouselDiv.style.marginLeft = 'auto';
@@ -848,7 +853,7 @@ class ctclImgGal{
         let carouselDivCont = document.createElement('div')
         carouselDivCont.style.width = `${opt.mainImgWd}px`,
         carouselDivCont.style.overflowX = 'scroll';
-        carouselDivCont.style.overflowY = "hidden";
+        carouselDivCont.style.overflowY = "hidden"
         carouselDivCont.style.marginLeft = 'auto';
         carouselDivCont.style.marginRight = 'auto';
         carouselDivCont.style.display = 'block';
@@ -862,7 +867,7 @@ class ctclImgGal{
                 galImg.src =  y.src;
                 galImg.style.border =  '1px solid rgba(0,0,0,1)';
                 galImg.style.width = '70px';
-                galImg.style.height = '53px';
+                galImg.style.height = '70px';
                 galImg.style.margin = '2px';
                 
                 galImg.addEventListener('mouseover', e => {
