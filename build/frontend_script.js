@@ -164,7 +164,7 @@ class ctcOverlayViewer {
 		if (undefined == toolbarDiv) {
 			let toolbarDiv = document.createElement('div');
 			toolbarDiv.id = 'toolbar-div';
-			toolbarDiv.style = `top:${(ovHeight / 2) - (0.077 * ovWidth)}px;float:right; transform: translateY(-50%); right: 0px;display: inline-block;position: fixed;`;
+			toolbarDiv.style = `top:${(ovHeight / 1.6) - (0.077 * ovWidth)}px;float:right; transform: translateY(-50%); right: 0px;display: inline-block;position: fixed;`;
 
 			let prevBtn = document.createElement('div');
 			prevBtn.id = 'gal-prev-img';
@@ -421,7 +421,7 @@ class ctcOverlayViewer {
 				});
 
 				let toolbarDiv = overlayDiv.querySelector('#toolbar-div');
-				toolbarDiv.style = `top:${(overlayHeight / 2) - (0.077 * overlayWidth)}px;float:right;right: 0px;display: inline-block;position: fixed;`;
+				toolbarDiv.style = `top:${(overlayHeight / 1.8) - (0.077 * overlayWidth)}px;float:right;right: 0px;display: inline-block;position: fixed;`;
 				Array.from(toolbarDiv.querySelectorAll('div')).map(x => {
 					x.style.height = `${0.02 * overlayWidth}px`;
 					x.style.width = `${0.02 * overlayWidth}px`;
