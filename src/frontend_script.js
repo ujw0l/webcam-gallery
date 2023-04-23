@@ -42,7 +42,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
         Array.from(carGal).map(x=>{
 
-        new ctcOverlayViewer(`#${x.getAttribute('id')}`)
+      
         x.style.width = `${x.getAttribute('data-carousel-width')}px`;
 		x.style.height = `${x.getAttribute('data-carousel-height')}px`; 
 		x.style.marginLeft = 'auto';
