@@ -21,7 +21,10 @@
 	},
 	"dependencies": {
 		"@wordpress/media-utils": "^4.22.0",
+		"ctc-gallery-viewer": "^1.6.0",
 		"ctcl-image-gallery": "^1.0.0",
-		"images-carousel": "^1.0.2"
+		"images-carousel": "^1.0.2",
+		"install": "^0.13.0",
+		"npm": "^9.6.5"
 	}
 }

@@ -65,43 +65,6 @@ export default function Edit({clientId,attributes,setAttributes}) {
 	},[])
 
 
-//apply gallery layout
-useEffect(()=>{
-let galDiv = document.querySelector(`#webcam-main-gallery-${clientId}`);
-setAttributes({clntId:clientId})
-
-   galDiv.style = '';
-
-
-if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll('img')).length > 3 ){
-
-	Array.from(galDiv.querySelectorAll('img')).map(x=>x.style='');
-	galDiv.querySelectorAll('div') != null && Array.from(galDiv.querySelectorAll('div')).map(y=>y.remove());
-
-	if(attributes.galType == 'masonry'){
-		new jsMasonry(`#webcam-main-gallery-${clientId}`,{elWidth:attributes.masImgWd , elMargin:attributes.masonryGutter});
-
-
-	}else if(attributes.galType == 'product'){
-        new ctclImgGal(`#webcam-main-gallery-${clientId}`,{imgGal:attributes.selectedGalImgs, mainImgWd : attributes.prodMainDivWd , mainImgHt:attributes.prodMainDivHt,});
-
-	}else if(attributes.galType == 'carousel'){
-		let carWid =  attributes.carouselWd > 600 ? 600 : attributes.carouselWd;
-		galDiv.style.width = `${carWid}px`;
-		galDiv.style.height = `${attributes.carouselHt}px`; 
-		galDiv.style.marginLeft = 'auto';
-		galDiv.style.marginRight = 'auto';
-		galDiv.style.display = 'block';
-		new imageCarousel(`#webcam-main-gallery-${clientId}`,{})
-		window.dispatchEvent(new Event('resize'))
-	}else{
-		return;
-	}
-
-}
-  
-},[attributes.galType,attributes.selectedGalImgs, attributes.prodMainDivHt,attributes.prodMainDivWd,attributes.masImgWd,attributes.carouselWd,attributes.carouselHt,attributes.masonryGutter,attributes.activeCam])
-
 
 	// for applying effects
 	useEffect(() => {
@@ -113,8 +76,6 @@ if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll(
     useEffect(() => {
       const video = videoRef.current;
       const canvas = canvasRef.current;
-
-      const constraints = { video: true };
 
       navigator.mediaDevices.getUserMedia({video:{deviceId: { exact: attributes.activeCam }}})
         .then(stream => {
@@ -132,8 +93,51 @@ if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll(
     }, [attributes.activeCam]);
 
 
+	//apply gallery layout
+useEffect(()=>{
+	let galDiv = document.querySelector(`#webcam-${attributes.galType}-gallery-${clientId}`);
+	setAttributes({clntId:clientId})
+	
+	   galDiv.style = '';
+	
+	
+	if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll('img')).length > 3 ){
 
-    const takePicture = async () => {
+
+		Array.from(galDiv.querySelectorAll('img')).map(x=>x.style='');
+		galDiv.querySelectorAll('div') != null && Array.from(galDiv.querySelectorAll('div')).map(y=>y.remove());
+	
+		if(attributes.galType == 'masonry'){
+			
+			galDiv.classList.remove('webcam-carousel-gallery');
+			galDiv.classList.remove('ctclig-image-list');
+			new jsMasonry(`#webcam-masonry-gallery-${clientId} `,{elWidth:attributes.masImgWd , elMargin:attributes.masonryGutter})
+
+		}else if(attributes.galType == 'product'){
+			new ctclImgGal(`#webcam-product-gallery-${clientId}`,{imgGal:attributes.selectedGalImgs, mainImgWd : attributes.prodMainDivWd , mainImgHt:attributes.prodMainDivHt,});
+		}else if(attributes.galType == 'carousel'){
+			let carWid =  attributes.carouselWd > 600 ? 600 : attributes.carouselWd;
+			galDiv.classList.add('webcam-carousel-gallery');
+			galDiv.style.width = `${carWid}px`;
+			galDiv.style.height = `${attributes.carouselHt}px`; 
+			galDiv.style.marginLeft = 'auto';
+			galDiv.style.marginRight = 'auto';
+			galDiv.style.display = 'block';
+			new imageCarousel(`#webcam-carousel-gallery-${clientId}`,{})
+			window.dispatchEvent(new Event('resize'))
+		}else{
+			return;
+		}
+	
+	}
+	  
+	},[attributes.galType,attributes.selectedGalImgs, attributes.prodMainDivHt,attributes.prodMainDivWd,attributes.masImgWd,attributes.carouselWd,attributes.carouselHt,attributes.masonryGutter, attributes.activeCam])
+	
+	
+
+
+
+    const takePicture =  () => {
 	
 	  	
       const video = videoRef.current;
@@ -482,11 +486,11 @@ if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll(
 
 		</div>
 
-		<div id={`webcam-main-gallery-${clientId}`} className = {'webcam-gallery-cont'} >
+		<div id={`webcam-${attributes.galType}-gallery-${clientId}`} className = {'webcam-gallery-cont'} >
+			
 			{
 				attributes.selectedGalImgs.map(x=>	x != undefined && <img style={{width:"33%"}} src={x}/>)
 			}
-
 		</div>
 			
       </div>

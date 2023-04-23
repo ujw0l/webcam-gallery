@@ -95,42 +95,6 @@ function Edit(_ref) {
     });
   }, []);
 
-  //apply gallery layout
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    let galDiv = document.querySelector(`#webcam-main-gallery-${clientId}`);
-    setAttributes({
-      clntId: clientId
-    });
-    galDiv.style = '';
-    if (attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll('img')).length > 3) {
-      Array.from(galDiv.querySelectorAll('img')).map(x => x.style = '');
-      galDiv.querySelectorAll('div') != null && Array.from(galDiv.querySelectorAll('div')).map(y => y.remove());
-      if (attributes.galType == 'masonry') {
-        new js_masonry_js_masonry_js__WEBPACK_IMPORTED_MODULE_3__.jsMasonry(`#webcam-main-gallery-${clientId}`, {
-          elWidth: attributes.masImgWd,
-          elMargin: attributes.masonryGutter
-        });
-      } else if (attributes.galType == 'product') {
-        new ctcl_image_gallery_ctcl_image_gallery_js__WEBPACK_IMPORTED_MODULE_5__.ctclImgGal(`#webcam-main-gallery-${clientId}`, {
-          imgGal: attributes.selectedGalImgs,
-          mainImgWd: attributes.prodMainDivWd,
-          mainImgHt: attributes.prodMainDivHt
-        });
-      } else if (attributes.galType == 'carousel') {
-        let carWid = attributes.carouselWd > 600 ? 600 : attributes.carouselWd;
-        galDiv.style.width = `${carWid}px`;
-        galDiv.style.height = `${attributes.carouselHt}px`;
-        galDiv.style.marginLeft = 'auto';
-        galDiv.style.marginRight = 'auto';
-        galDiv.style.display = 'block';
-        new images_carousel_image_carousel_js__WEBPACK_IMPORTED_MODULE_4__.imageCarousel(`#webcam-main-gallery-${clientId}`, {});
-        window.dispatchEvent(new Event('resize'));
-      } else {
-        return;
-      }
-    }
-  }, [attributes.galType, attributes.selectedGalImgs, attributes.prodMainDivHt, attributes.prodMainDivWd, attributes.masImgWd, attributes.carouselWd, attributes.carouselHt, attributes.masonryGutter, attributes.activeCam]);
-
   // for applying effects
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     setAttributes({
@@ -142,9 +106,6 @@ function Edit(_ref) {
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    const constraints = {
-      video: true
-    };
     navigator.mediaDevices.getUserMedia({
       video: {
         deviceId: {
@@ -159,7 +120,46 @@ function Edit(_ref) {
       console.error(error);
     });
   }, [attributes.activeCam]);
-  const takePicture = async () => {
+
+  //apply gallery layout
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    let galDiv = document.querySelector(`#webcam-${attributes.galType}-gallery-${clientId}`);
+    setAttributes({
+      clntId: clientId
+    });
+    galDiv.style = '';
+    if (attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll('img')).length > 3) {
+      Array.from(galDiv.querySelectorAll('img')).map(x => x.style = '');
+      galDiv.querySelectorAll('div') != null && Array.from(galDiv.querySelectorAll('div')).map(y => y.remove());
+      if (attributes.galType == 'masonry') {
+        galDiv.classList.remove('webcam-carousel-gallery');
+        galDiv.classList.remove('ctclig-image-list');
+        new js_masonry_js_masonry_js__WEBPACK_IMPORTED_MODULE_3__.jsMasonry(`#webcam-masonry-gallery-${clientId} `, {
+          elWidth: attributes.masImgWd,
+          elMargin: attributes.masonryGutter
+        });
+      } else if (attributes.galType == 'product') {
+        new ctcl_image_gallery_ctcl_image_gallery_js__WEBPACK_IMPORTED_MODULE_5__.ctclImgGal(`#webcam-product-gallery-${clientId}`, {
+          imgGal: attributes.selectedGalImgs,
+          mainImgWd: attributes.prodMainDivWd,
+          mainImgHt: attributes.prodMainDivHt
+        });
+      } else if (attributes.galType == 'carousel') {
+        let carWid = attributes.carouselWd > 600 ? 600 : attributes.carouselWd;
+        galDiv.classList.add('webcam-carousel-gallery');
+        galDiv.style.width = `${carWid}px`;
+        galDiv.style.height = `${attributes.carouselHt}px`;
+        galDiv.style.marginLeft = 'auto';
+        galDiv.style.marginRight = 'auto';
+        galDiv.style.display = 'block';
+        new images_carousel_image_carousel_js__WEBPACK_IMPORTED_MODULE_4__.imageCarousel(`#webcam-carousel-gallery-${clientId}`, {});
+        window.dispatchEvent(new Event('resize'));
+      } else {
+        return;
+      }
+    }
+  }, [attributes.galType, attributes.selectedGalImgs, attributes.prodMainDivHt, attributes.prodMainDivWd, attributes.masImgWd, attributes.carouselWd, attributes.carouselHt, attributes.masonryGutter, attributes.activeCam]);
+  const takePicture = () => {
     const video = videoRef.current;
     video.style.opacity = '0.5';
     setTimeout(() => {
@@ -616,7 +616,7 @@ function Edit(_ref) {
     }),
     value: attributes.carouselWd
   }))))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    id: `webcam-main-gallery-${clientId}`,
+    id: `webcam-${attributes.galType}-gallery-${clientId}`,
     className: 'webcam-gallery-cont'
   }, attributes.selectedGalImgs.map(x => x != undefined && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     style: {
@@ -862,7 +862,6 @@ __webpack_require__.r(__webpack_exports__);
  */
 function save(_ref) {
   let {
-    clientId,
     attributes
   } = _ref;
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save(), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -870,6 +869,7 @@ function save(_ref) {
       display: "none"
     },
     id: `webcam-main-gallery-${attributes.clntId}`,
+    "data-mas-width": attributes.masImgWd,
     "data-mas-gutwd": attributes.masonryGutter,
     "data-carousel-height": attributes.carouselHt,
     "data-carousel-width": attributes.carouselWd,
@@ -910,6 +910,7 @@ class ctclImgGal{
 
         el.classList.add('ctclig-image-list');
 
+      
         let mainImgDiv =  document.createElement('div');
         mainImgDiv.classList.add('ctclig-main-image');
         mainImgDiv.style.height = `${opt.mainImgHt}px`;
@@ -1309,7 +1310,13 @@ __webpack_require__.r(__webpack_exports__);
                 let brkPer = undefined != opt && undefined == opt.elWidth && true === opt.percentWidth ? elFirstChild.offsetWidth / el.offsetWidth : null;
                 this.layBrks(el, opt, brkPer);
                 massApplied++
-                window.addEventListener('resize', () => this.layBrks(el, opt, brkPer, event));
+                window.addEventListener('resize', (event) => { 
+
+                    if(!el.classList.contains('ctclig-image-list') && !el.classList.contains('webcam-carousel-gallery') )
+                    {
+                        this.layBrks(el, opt, brkPer, event)
+                    } 
+                 } )
             }
         });
         if (1 < massApplied) {
