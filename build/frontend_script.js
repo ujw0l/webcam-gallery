@@ -1215,7 +1215,6 @@ window.addEventListener("DOMContentLoaded", event => {
     });
   } else if (carGal.length !== 0) {
     Array.from(carGal).map(x => {
-      new ctc_gallery_viewer_ctc_overlay_js__WEBPACK_IMPORTED_MODULE_3__.ctcOverlayViewer(`#${x.getAttribute('id')}`);
       x.style.width = `${x.getAttribute('data-carousel-width')}px`;
       x.style.height = `${x.getAttribute('data-carousel-height')}px`;
       x.style.marginLeft = 'auto';

@@ -127,6 +127,7 @@ function Edit(_ref) {
     setAttributes({
       clntId: clientId
     });
+    new js_masonry_js_masonry_js__WEBPACK_IMPORTED_MODULE_3__.jsMasonry(`#modal-img-cont-${clientId}`);
     galDiv.style = '';
     if (attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll('img')).length > 3) {
       Array.from(galDiv.querySelectorAll('img')).map(x => x.style = '');
@@ -370,7 +371,9 @@ function Edit(_ref) {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Select Images', "webcam-gallery"),
     onRequestClose: () => setModOpen(false)
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    id: `modal-img-cont-${clientId}`,
     style: {
+      width: '95%',
       height: "80%",
       marginLeft: "auto",
       marginRight: "auto",
@@ -383,7 +386,7 @@ function Edit(_ref) {
         display: "inline-block",
         "max-width": "30%",
         margin: '10px',
-        width: "170px",
+        width: "160px",
         height: '200px'
       }
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
@@ -615,7 +618,7 @@ function Edit(_ref) {
       carouselWd: val
     }),
     value: attributes.carouselWd
-  }))))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }))))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)("Demo", 'webcam-gallery'), " "), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     id: `webcam-${attributes.galType}-gallery-${clientId}`,
     className: 'webcam-gallery-cont'
   }, attributes.selectedGalImgs.map(x => x != undefined && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
@@ -623,7 +626,7 @@ function Edit(_ref) {
       width: "33%"
     },
     src: x
-  })))));
+  }))))));
 }
 
 /***/ }),

@@ -97,11 +97,13 @@ export default function Edit({clientId,attributes,setAttributes}) {
 useEffect(()=>{
 	let galDiv = document.querySelector(`#webcam-${attributes.galType}-gallery-${clientId}`);
 	setAttributes({clntId:clientId})
-	
+	new jsMasonry(`#modal-img-cont-${clientId}`);
 	   galDiv.style = '';
 	
 	
 	if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll('img')).length > 3 ){
+
+
 
 
 		Array.from(galDiv.querySelectorAll('img')).map(x=>x.style='');
@@ -300,11 +302,11 @@ useEffect(()=>{
 	{ modIsOpen && attributes.webCamImages &&
 				
 				<Modal isFullScreen={true} title={__('Select Images',"webcam-gallery")} onRequestClose={()=>setModOpen(false)}>
-	<div style={{height:"80%", marginLeft:"auto", marginRight:"auto",display:"block" }}>
+	<div id={`modal-img-cont-${clientId}`} style={{width:'95%', height:"80%", marginLeft:"auto", marginRight:"auto",display:"block" }}>
 					{
 				attributes.webCamImages.map((x,i)=>{
 				return (
-						<span className="allGalImage" style={{display:"inline-block", "max-width":"30%" ,margin:'10px',width:"170px",height:'200px'}}>
+						<span className="allGalImage" style={{display:"inline-block", "max-width":"30%" ,margin:'10px',width:"160px",height:'200px'}}>
 						  <img class={'single-gal-img'} style={{width:"100%",height:'65%'}} src={x}/>
 						  <div style={{display:"inline-block","float":"left"}}>
 						  <CheckboxControl style={{verticalAlign:"middle","float":"right"}} id={`check-box-gal-${i}`} className= {"webcam-selected-gal"} 
@@ -485,14 +487,16 @@ useEffect(()=>{
 </div>
 
 		</div>
-
+<div>
+	<h4>{__("Demo", 'webcam-gallery')} </h4>
 		<div id={`webcam-${attributes.galType}-gallery-${clientId}`} className = {'webcam-gallery-cont'} >
+		
 			
 			{
 				attributes.selectedGalImgs.map(x=>	x != undefined && <img style={{width:"33%"}} src={x}/>)
 			}
 		</div>
-			
+	</div>		
       </div>
 
 	  </div>
