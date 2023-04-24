@@ -97,7 +97,7 @@ export default function Edit({clientId,attributes,setAttributes}) {
 useEffect(()=>{
 	let galDiv = document.querySelector(`#webcam-${attributes.galType}-gallery-${clientId}`);
 	setAttributes({clntId:clientId})
-	new jsMasonry(`#modal-img-cont-${clientId}`);
+	
 	   galDiv.style = '';
 	
 	
@@ -302,6 +302,7 @@ useEffect(()=>{
 	{ modIsOpen && attributes.webCamImages &&
 				
 				<Modal isFullScreen={true} title={__('Select Images',"webcam-gallery")} onRequestClose={()=>setModOpen(false)}>
+					
 	<div id={`modal-img-cont-${clientId}`} style={{width:'95%', height:"80%", marginLeft:"auto", marginRight:"auto",display:"block" }}>
 					{
 				attributes.webCamImages.map((x,i)=>{
@@ -331,6 +332,7 @@ useEffect(()=>{
 							} 
 							/>
 							</div>
+							
 							<div style={{"display":"inline-block", "float":"right"}}>
 
 								<Button key={i} variant={'secondary'} onClick={()=>{
@@ -488,7 +490,7 @@ useEffect(()=>{
 
 		</div>
 <div>
-	<h4>{__("Demo", 'webcam-gallery')} </h4>
+	 {attributes.selectedGalImgs.length >=3 ? <h4>{__("Demo", 'webcam-gallery')} </h4>:''}
 		<div id={`webcam-${attributes.galType}-gallery-${clientId}`} className = {'webcam-gallery-cont'} >
 		
 			
