@@ -1,6 +1,6 @@
 === Webcam Gallery ===
 Contributors:      UjW0L
-Tags:              block
+Tags:              block, webcam, gallery
 Tested up to:      6.1
 Stable tag:        0.1.0
 License:           GPL-2.0-or-later
@@ -35,7 +35,13 @@ Yes  you option to choose camera from setting section to take picture given that
 
 == Screenshots ==
 
-
+1.	Gutenberg Editor with block
+2.	Images In Modal
+3.	Gallery 1
+4.    Block Settings
+5.    Frontend Overlay
+6. Carousel Gallery
+7. Masonry Gallery
 == Changelog ==
 
 = 0.1.0 =
