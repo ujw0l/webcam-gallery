@@ -7,11 +7,11 @@ Stable tag:        0.1.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Take Images with Web Cam , apply effects and create gallery and embed in pos using Gutenberg block. 
+Take Images with Web Cam , apply effects and create gallery and embed in post using Gutenberg block. 
 
 == Description ==
 
-With this Gutenberg block you can apply differnt types of to images take pictures with web cab apply 3 differnt types of gallery and embed the gallery
+With this Gutenberg block you can apply differnt types of effects to images take pictures with web cam apply 3 differnt types of gallery (all written by me) and embed the gallery
 to the post and view images in overlay gallery viewer.
 
 == Installation ==
@@ -35,7 +35,13 @@ Yes you can add multiple gallery to one post.
 Yes  you option to choose camera from setting section to take picture given that you have multiple camera in your tablet or PC.
 
 == Screenshots ==
-
+1.	Gutenberg Editor with block
+2.	Images In Modal
+3.	Gallery 1
+4.  Block Settings
+5.  Frontend Overlay
+6.  Carousel Gallery
+7. Masonry Gallery
 
 == Changelog ==
 
