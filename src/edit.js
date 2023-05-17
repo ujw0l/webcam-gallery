@@ -298,7 +298,7 @@ useEffect(()=>{
 		  
 <div style={{display:'block',width:'500px',marginLeft:'auto',marginRight:'auto'}}>
 				<PanelBody header={__('Capture Picture', 'webcam-gallery')}>
-            <span style={{display:'inline-block', float:'left',marginLeft:'100px'}}><Button variant={'primary'} style={{}} onClick={takePicture}>{__("Take Picture",'webcam-gallery')}</Button></span>
+            <span style={{display:'inline-block', float:'left',marginLeft:'70px'}}><Button variant={'primary'} style={{}} onClick={takePicture}>{__("Take Picture",'webcam-gallery')}</Button></span>
 			
 			<span  style={{display:'inline-block',marginLeft:'100px' }} ><Button variant={"primary"} style={{}} disabled={attributes.webCamImages.length > 0?false:true} onClick={()=>setModOpen(true)}>{__('Select Gallery Images','webcam-gallery')}</Button></span>
 			</PanelBody>
@@ -310,7 +310,7 @@ useEffect(()=>{
 
 	{ modIsOpen && attributes.webCamImages &&
 				
-				<Modal isFullScreen={true} title={__('Select Images',"webcam-gallery")} onRequestClose={()=>setModOpen(false)}>
+				<Modal isFullScreen={true} title={__('Select Images (Atleast 3 images)',"webcam-gallery")} onRequestClose={()=>setModOpen(false)}>
 					
 	<div id={`modal-img-cont-${clientId}`} style={{width:'95%', height:"80%", marginLeft:"auto", marginRight:"auto",display:"block" }}>
 					{
@@ -499,6 +499,7 @@ useEffect(()=>{
 
 		</div>
 <div id={`webcam-gal-${attributes.clntId}`} >
+	
 	 {attributes.selectedGalImgs.length >=3 && <div> <h4>{__("Demo", 'webcam-gallery')} </h4>
 		<div style={{marginLeft:'auto', marginRight:'auto', display:'block',overflow:"auto"}} id={`webcam-${attributes.galType}-gallery-${clientId}`} className = {'webcam-gallery-cont'} >
 		
@@ -509,6 +510,8 @@ useEffect(()=>{
 		</div>
 		</div>
 }
+
+
 	</div>		
       </div>
 
