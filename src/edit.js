@@ -300,7 +300,7 @@ useEffect(()=>{
 				<PanelBody header={__('Capture Picture', 'webcam-gallery')}>
             <span style={{display:'inline-block', float:'left',marginLeft:'100px'}}><Button variant={'primary'} style={{}} onClick={takePicture}>{__("Take Picture",'webcam-gallery')}</Button></span>
 			
-			<span  style={{display:'inline-block',marginLeft:'100px' }} ><Button variant={"primary"} style={{}} disabled={attributes.webCamImages.length > 0?false:true} onClick={()=>setModOpen(true)}>{__('Select Images','webcam-gallery')}</Button></span>
+			<span  style={{display:'inline-block',marginLeft:'100px' }} ><Button variant={"primary"} style={{}} disabled={attributes.webCamImages.length > 0?false:true} onClick={()=>setModOpen(true)}>{__('Select Gallery Images','webcam-gallery')}</Button></span>
 			</PanelBody>
 		
 			</div>
