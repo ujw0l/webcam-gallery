@@ -172,11 +172,7 @@ useEffect(()=>{
 		  <InspectorControls>
 			<PanelBody>
           <div style={{display:'block'}}>
-			<span style={{marginBottom:"10px"}}>
-				<PanelBody header={__('Capture Picture', 'webcam-gallery')}>
-            <Button variant={'primary'} style={{marginLeft:'auto',marginRight:'auto',display:'block'}} onClick={takePicture}>{__("Take Picture",'webcam-gallery')}</Button>
-			</PanelBody>
-		  </span>
+			
 
 		  <span>
 <PanelBody>
@@ -298,9 +294,20 @@ useEffect(()=>{
 				</PanelBody>
 		  </InspectorControls>
 		  </div>
+
+		  
+<div style={{display:'block',width:'500px',marginLeft:'auto',marginRight:'auto'}}>
+				<PanelBody header={__('Capture Picture', 'webcam-gallery')}>
+            <span style={{display:'inline-block', float:'left',marginLeft:'100px'}}><Button variant={'primary'} style={{}} onClick={takePicture}>{__("Take Picture",'webcam-gallery')}</Button></span>
+			
+			<span  style={{display:'inline-block',marginLeft:'100px' }} ><Button variant={"primary"} style={{}} disabled={attributes.webCamImages.length > 0?false:true} onClick={()=>setModOpen(true)}>{__('Select Images','webcam-gallery')}</Button></span>
+			</PanelBody>
+		
+			</div>
 <div style={{display:"block", marginTop:"10px"}}>
-	
-	<Button variant={"primary"} style={{marginLeft:'auto',marginRight:'auto',display:'block'}} disabled={attributes.webCamImages.length > 0?false:true} onClick={()=>setModOpen(true)}>{__('Select Images','webcam-gallery')}</Button>
+
+
+
 	{ modIsOpen && attributes.webCamImages &&
 				
 				<Modal isFullScreen={true} title={__('Select Images',"webcam-gallery")} onRequestClose={()=>setModOpen(false)}>
@@ -369,7 +376,7 @@ useEffect(()=>{
  
 <div className={'webcam-gallery-select'} style={{marginTop:"10px",marginBottom:"10px", borderStyle:"solid", padding:"10px", borderColor:"rgba(11, 127, 171,1)"}} >
 
-
+<p>{__('Select Gallery Layout',"webcam-galleryr")}</p>
 	
 <span style={{width:"32%" , display:"inline-block", margin:"3px"}}>
 	<div style={{height: "60px"}}>
