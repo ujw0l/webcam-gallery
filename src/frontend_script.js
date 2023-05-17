@@ -43,7 +43,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         Array.from(carGal).map(x=>{
 
       
-        x.style.width = `${x.getAttribute('data-carousel-width')}px`;
+        x.style.width = `${x.getAttribute('data-carousel-width')}%`;
 		x.style.height = `${x.getAttribute('data-carousel-height')}px`; 
 		x.style.marginLeft = 'auto';
 		x.style.marginRight = 'auto';

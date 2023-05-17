@@ -97,11 +97,13 @@ export default function Edit({clientId,attributes,setAttributes}) {
 useEffect(()=>{
 	let galDiv = document.querySelector(`#webcam-${attributes.galType}-gallery-${clientId}`);
 	setAttributes({clntId:clientId})
+
+	if(null != galDiv){
 	
-	   galDiv.style = '';
+	galDiv.style = '';
 	
 	
-	if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll('img')).length > 3 ){
+	if(attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll('img')).length >= 3 ){
 
 
 
@@ -118,9 +120,9 @@ useEffect(()=>{
 		}else if(attributes.galType == 'product'){
 			new ctclImgGal(`#webcam-product-gallery-${clientId}`,{imgGal:attributes.selectedGalImgs, mainImgWd : attributes.prodMainDivWd , mainImgHt:attributes.prodMainDivHt,});
 		}else if(attributes.galType == 'carousel'){
-			let carWid =  attributes.carouselWd > 600 ? 600 : attributes.carouselWd;
+			let carWid =  attributes.carouselWd;
 			galDiv.classList.add('webcam-carousel-gallery');
-			galDiv.style.width = `${carWid}px`;
+			galDiv.style.width = `${carWid}%`;
 			galDiv.style.height = `${attributes.carouselHt}px`; 
 			galDiv.style.marginLeft = 'auto';
 			galDiv.style.marginRight = 'auto';
@@ -132,6 +134,7 @@ useEffect(()=>{
 		}
 	
 	}
+}
 	  
 	},[attributes.galType,attributes.selectedGalImgs, attributes.prodMainDivHt,attributes.prodMainDivWd,attributes.masImgWd,attributes.carouselWd,attributes.carouselHt,attributes.masonryGutter, attributes.activeCam])
 	
@@ -161,10 +164,9 @@ useEffect(()=>{
     return (
 		<div {...useBlockProps()}  >
       <div style={{color:"rgba(rgba(11, 127, 171,1))"}} >
-		<font className={"dashicons dashicons-camera-alt"} style={{width:"200px", display:"block",margin:"auto",marginBottom:"20px"}} >{__('WebCam Gallery','webcam-gallery')}</font>
-        <div style={{borderStyle:"solid", padding:"10px", borderColor:"rgba(11, 127, 171,1)"}}>
-		<div style={{display:'block'}}>
-          <video ref={videoRef} style={{'filter':`${attributes.filter}`,  }} />
+        <div style={{ padding:"10px" }}>
+		<div style={{marginLeft:'auto', marginRight:'auto', display:'block'}}>
+          <video ref={videoRef} style={{marginLeft:'auto', marginRight:'auto', display:'block','filter':`${attributes.filter}`,  }} />
 		  </div>
           <canvas  ref={canvasRef} width="640" height="480" style={{ display: 'none' }} />
 		  <InspectorControls>
@@ -383,7 +385,7 @@ useEffect(()=>{
 	</div>
 <PanelBody >
 					<RangeControl
-						label={__('Main Image height', 'webcam-gallery')}
+						label={__('Main Image height (px)', 'webcam-gallery')}
 						min={200}
 						max={700}
 						step={5}
@@ -393,7 +395,7 @@ useEffect(()=>{
 					/>		
 	
 	<RangeControl
-						label={__('Main Image Width', 'webcam-gallery')}
+						label={__('Main Image Width (px)', 'webcam-gallery')}
 						min={200}
 						max={900}
 						step= {5}
@@ -419,9 +421,9 @@ useEffect(()=>{
 </div>
 <PanelBody>
 <RangeControl
-						label={__('Image Width', 'webcam-gallery')}
-						min={100}
-						max={400}
+						label={__('Image  Width (px)', 'webcam-gallery')}
+						min={32}
+						max={600}
 						step={5}
 						withInputField = {true}
 						onChange={val => setAttributes({masImgWd:val}) }
@@ -429,7 +431,7 @@ useEffect(()=>{
 					/>	
 
 <RangeControl
-						label={__('Gutter Width', 'webcam-gallery')}
+						label={__('Gutter Width (px)', 'webcam-gallery')}
 						min={1}
 						max={50}
 						step={1}
@@ -462,7 +464,7 @@ useEffect(()=>{
 
 <PanelBody>
 					<RangeControl
-						label={__('Carousel height', 'webcam-gallery')}
+						label={__('Carousel height (px)', 'webcam-gallery')}
 						min={100}
 						max={700}
 						step={1}
@@ -472,9 +474,9 @@ useEffect(()=>{
 					/>		
 	
 	<RangeControl
-						label={__('Carousel Width', 'webcam-gallery')}
-						min={100}
-						max={900}
+						label={__('Carousel Width (%)', 'webcam-gallery')}
+						min={10}
+						max={100}
 						step= {1}
 						withInputField = {true}
 						onChange={val => setAttributes({carouselWd:val}) }
@@ -489,15 +491,17 @@ useEffect(()=>{
 </div>
 
 		</div>
-<div>
-	 {attributes.selectedGalImgs.length >=3 ? <h4>{__("Demo", 'webcam-gallery')} </h4>:''}
-		<div id={`webcam-${attributes.galType}-gallery-${clientId}`} className = {'webcam-gallery-cont'} >
+<div id={`webcam-gal-${attributes.clntId}`} >
+	 {attributes.selectedGalImgs.length >=3 && <div> <h4>{__("Demo", 'webcam-gallery')} </h4>
+		<div style={{marginLeft:'auto', marginRight:'auto', display:'block',overflow:"auto"}} id={`webcam-${attributes.galType}-gallery-${clientId}`} className = {'webcam-gallery-cont'} >
 		
 			
 			{
 				attributes.selectedGalImgs.map(x=>	x != undefined && <img style={{width:"33%"}} src={x}/>)
 			}
 		</div>
+		</div>
+}
 	</div>		
       </div>
 

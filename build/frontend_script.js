@@ -591,6 +591,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ctclImgGal": function() { return /* binding */ ctclImgGal; }
 /* harmony export */ });
+
+/*
+ * Js Masonry
+ * javascript library create gallery with main image
+ * https://ujw0l.github.io/
+ * MIT license
+ *  
+ */
+
+
 class ctclImgGal{
 
 
@@ -622,7 +632,7 @@ class ctclImgGal{
         
         let carouselDivCont = document.createElement('div')
         carouselDivCont.style.width = `${opt.mainImgWd}px`,
-        carouselDivCont.style.overflowX = 'scroll';
+        carouselDivCont.style.overflowX = 'auto';
         carouselDivCont.style.overflowY = "hidden"
         carouselDivCont.style.marginLeft = 'auto';
         carouselDivCont.style.marginRight = 'auto';
@@ -1215,7 +1225,7 @@ window.addEventListener("DOMContentLoaded", event => {
     });
   } else if (carGal.length !== 0) {
     Array.from(carGal).map(x => {
-      x.style.width = `${x.getAttribute('data-carousel-width')}px`;
+      x.style.width = `${x.getAttribute('data-carousel-width')}%`;
       x.style.height = `${x.getAttribute('data-carousel-height')}px`;
       x.style.marginLeft = 'auto';
       x.style.marginRight = 'auto';

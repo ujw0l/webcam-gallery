@@ -15,6 +15,8 @@
 .ctclig-image-list {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .ctclig-main-image {
@@ -30,10 +32,14 @@
   margin-left: auto;
   margin-right: auto;
   display: block;
+  overflow: auto;
 }
 
 .webcam-gallery-cont {
-  overflow: scroll;
+  overflow: auto;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 /*# sourceMappingURL=index.css.map*/

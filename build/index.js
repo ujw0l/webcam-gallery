@@ -127,35 +127,37 @@ function Edit(_ref) {
     setAttributes({
       clntId: clientId
     });
-    galDiv.style = '';
-    if (attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll('img')).length > 3) {
-      Array.from(galDiv.querySelectorAll('img')).map(x => x.style = '');
-      galDiv.querySelectorAll('div') != null && Array.from(galDiv.querySelectorAll('div')).map(y => y.remove());
-      if (attributes.galType == 'masonry') {
-        galDiv.classList.remove('webcam-carousel-gallery');
-        galDiv.classList.remove('ctclig-image-list');
-        new js_masonry_js_masonry_js__WEBPACK_IMPORTED_MODULE_3__.jsMasonry(`#webcam-masonry-gallery-${clientId} `, {
-          elWidth: attributes.masImgWd,
-          elMargin: attributes.masonryGutter
-        });
-      } else if (attributes.galType == 'product') {
-        new ctcl_image_gallery_ctcl_image_gallery_js__WEBPACK_IMPORTED_MODULE_5__.ctclImgGal(`#webcam-product-gallery-${clientId}`, {
-          imgGal: attributes.selectedGalImgs,
-          mainImgWd: attributes.prodMainDivWd,
-          mainImgHt: attributes.prodMainDivHt
-        });
-      } else if (attributes.galType == 'carousel') {
-        let carWid = attributes.carouselWd > 600 ? 600 : attributes.carouselWd;
-        galDiv.classList.add('webcam-carousel-gallery');
-        galDiv.style.width = `${carWid}px`;
-        galDiv.style.height = `${attributes.carouselHt}px`;
-        galDiv.style.marginLeft = 'auto';
-        galDiv.style.marginRight = 'auto';
-        galDiv.style.display = 'block';
-        new images_carousel_image_carousel_js__WEBPACK_IMPORTED_MODULE_4__.imageCarousel(`#webcam-carousel-gallery-${clientId}`, {});
-        window.dispatchEvent(new Event('resize'));
-      } else {
-        return;
+    if (null != galDiv) {
+      galDiv.style = '';
+      if (attributes.selectedGalImgs.length >= 3 && Array.from(galDiv.querySelectorAll('img')).length >= 3) {
+        Array.from(galDiv.querySelectorAll('img')).map(x => x.style = '');
+        galDiv.querySelectorAll('div') != null && Array.from(galDiv.querySelectorAll('div')).map(y => y.remove());
+        if (attributes.galType == 'masonry') {
+          galDiv.classList.remove('webcam-carousel-gallery');
+          galDiv.classList.remove('ctclig-image-list');
+          new js_masonry_js_masonry_js__WEBPACK_IMPORTED_MODULE_3__.jsMasonry(`#webcam-masonry-gallery-${clientId} `, {
+            elWidth: attributes.masImgWd,
+            elMargin: attributes.masonryGutter
+          });
+        } else if (attributes.galType == 'product') {
+          new ctcl_image_gallery_ctcl_image_gallery_js__WEBPACK_IMPORTED_MODULE_5__.ctclImgGal(`#webcam-product-gallery-${clientId}`, {
+            imgGal: attributes.selectedGalImgs,
+            mainImgWd: attributes.prodMainDivWd,
+            mainImgHt: attributes.prodMainDivHt
+          });
+        } else if (attributes.galType == 'carousel') {
+          let carWid = attributes.carouselWd;
+          galDiv.classList.add('webcam-carousel-gallery');
+          galDiv.style.width = `${carWid}%`;
+          galDiv.style.height = `${attributes.carouselHt}px`;
+          galDiv.style.marginLeft = 'auto';
+          galDiv.style.marginRight = 'auto';
+          galDiv.style.display = 'block';
+          new images_carousel_image_carousel_js__WEBPACK_IMPORTED_MODULE_4__.imageCarousel(`#webcam-carousel-gallery-${clientId}`, {});
+          window.dispatchEvent(new Event('resize'));
+        } else {
+          return;
+        }
       }
     }
   }, [attributes.galType, attributes.selectedGalImgs, attributes.prodMainDivHt, attributes.prodMainDivWd, attributes.masImgWd, attributes.carouselWd, attributes.carouselHt, attributes.masonryGutter, attributes.activeCam]);
@@ -178,27 +180,22 @@ function Edit(_ref) {
     style: {
       color: "rgba(rgba(11, 127, 171,1))"
     }
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("font", {
-    className: "dashicons dashicons-camera-alt",
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     style: {
-      width: "200px",
-      display: "block",
-      margin: "auto",
-      marginBottom: "20px"
-    }
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('WebCam Gallery', 'webcam-gallery')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    style: {
-      borderStyle: "solid",
-      padding: "10px",
-      borderColor: "rgba(11, 127, 171,1)"
+      padding: "10px"
     }
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     style: {
+      marginLeft: 'auto',
+      marginRight: 'auto',
       display: 'block'
     }
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("video", {
     ref: videoRef,
     style: {
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      display: 'block',
       'filter': `${attributes.filter}`
     }
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("canvas", {
@@ -494,7 +491,7 @@ function Edit(_ref) {
       galType: 'product'
     })
   }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Main Image height', 'webcam-gallery'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Main Image height (px)', 'webcam-gallery'),
     min: 200,
     max: 700,
     step: 5,
@@ -504,7 +501,7 @@ function Edit(_ref) {
     }),
     value: attributes.prodMainDivHt
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Main Image Width', 'webcam-gallery'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Main Image Width (px)', 'webcam-gallery'),
     min: 200,
     max: 900,
     step: 5,
@@ -546,9 +543,9 @@ function Edit(_ref) {
       galType: 'masonry'
     })
   }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Image Width', 'webcam-gallery'),
-    min: 100,
-    max: 400,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Image  Width (px)', 'webcam-gallery'),
+    min: 32,
+    max: 600,
     step: 5,
     withInputField: true,
     onChange: val => setAttributes({
@@ -556,7 +553,7 @@ function Edit(_ref) {
     }),
     value: attributes.masImgWd
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Gutter Width', 'webcam-gallery'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Gutter Width (px)', 'webcam-gallery'),
     min: 1,
     max: 50,
     step: 1,
@@ -598,7 +595,7 @@ function Edit(_ref) {
       galType: 'carousel'
     })
   }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Carousel height', 'webcam-gallery'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Carousel height (px)', 'webcam-gallery'),
     min: 100,
     max: 700,
     step: 1,
@@ -608,16 +605,24 @@ function Edit(_ref) {
     }),
     value: attributes.carouselHt
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.RangeControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Carousel Width', 'webcam-gallery'),
-    min: 100,
-    max: 900,
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)('Carousel Width (%)', 'webcam-gallery'),
+    min: 10,
+    max: 100,
     step: 1,
     withInputField: true,
     onChange: val => setAttributes({
       carouselWd: val
     }),
     value: attributes.carouselWd
-  }))))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, attributes.selectedGalImgs.length >= 3 ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)("Demo", 'webcam-gallery'), " ") : '', (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }))))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    id: `webcam-gal-${attributes.clntId}`
+  }, attributes.selectedGalImgs.length >= 3 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, " ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__.__)("Demo", 'webcam-gallery'), " "), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    style: {
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      display: 'block',
+      overflow: "auto"
+    },
     id: `webcam-${attributes.galType}-gallery-${clientId}`,
     className: 'webcam-gallery-cont'
   }, attributes.selectedGalImgs.map(x => x != undefined && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
@@ -625,7 +630,7 @@ function Edit(_ref) {
       width: "33%"
     },
     src: x
-  }))))));
+  })))))));
 }
 
 /***/ }),
@@ -898,6 +903,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ctclImgGal": function() { return /* binding */ ctclImgGal; }
 /* harmony export */ });
+
+/*
+ * Js Masonry
+ * javascript library create gallery with main image
+ * https://ujw0l.github.io/
+ * MIT license
+ *  
+ */
+
+
 class ctclImgGal{
 
 
@@ -929,7 +944,7 @@ class ctclImgGal{
         
         let carouselDivCont = document.createElement('div')
         carouselDivCont.style.width = `${opt.mainImgWd}px`,
-        carouselDivCont.style.overflowX = 'scroll';
+        carouselDivCont.style.overflowX = 'auto';
         carouselDivCont.style.overflowY = "hidden"
         carouselDivCont.style.marginLeft = 'auto';
         carouselDivCont.style.marginRight = 'auto';
