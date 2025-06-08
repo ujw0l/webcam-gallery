@@ -15,7 +15,7 @@
 		"start": "wp-scripts start"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^30.0.2",
+		"@wordpress/scripts": "^30.18.0",
 		"js-masonry": "^1.1.0",
 		"webpack-cli": "^5.0.1"
 	},
